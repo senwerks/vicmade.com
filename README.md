@@ -1,0 +1,1 @@
+VicMade is an attempt at a git-based multi-user blog for makers/hackers to share their personal project updates. The users create posts using standard markdown files in their own repositories, and VicMade grabs those files, reformats them, and turns them into blog posts.
