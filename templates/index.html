@@ -1,0 +1,25 @@
+{% extends 'base.html' %} {% block content %}
+<h1>{% block title %} Posts {% endblock %}</h1>
+{% for post in posts %}
+<div class="post">
+  <h3>{{ post[1] }}</h3>
+  <p>
+    Via <a href="{{ post[4] }}">{{ post[2] }}</a> (<a href="{{ post[3] }}"
+      >Markdown</a
+    >) <i>Added {{ post[6] }}</i>
+  </p>
+  <p class="content">{{ post[5] }}</p>
+</div>
+{% endfor %}
+
+<p>Posts are pulled and collated from the following repositories:</p>
+<ul class="repolist">
+  {% for repo in repos %}
+  <li>
+    {{ repo[0] }} - <a href="{{ repo[2] }}">{{ repo[1] }}</a>
+    <i>(Added {{ repo[3] }})</i>
+  </li>
+  {% endfor %}
+</ul>
+
+{% endblock %}

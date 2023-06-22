@@ -1,6 +1,57 @@
-from flask import Flask
+import os
+import psycopg2  # https://www.psycopg.org/docs/
+from flask import Flask, render_template, request, url_for, redirect
+import markdown  # https://www.digitalocean.com/community/tutorials/how-to-use-python-markdown-to-convert-markdown-text-to-html
+
 app = Flask(__name__)
 
-@app.route('/')
-def homepage():
-    return 'Flask Works.'
+
+def get_db_connection():
+    conn = psycopg2.connect(
+        # host="postgres://dpg-ci97vkh8g3ne2egtvuk0-a", # When app.py is on render.com
+        host="postgres://dpg-ci97vkh8g3ne2egtvuk0-a.singapore-postgres.render.com",  # When app.py is run locally
+        database="vicmadesql",
+        user=os.getenv("DB_USERNAME"),
+        password=os.getenv("DB_PASSWORD"),
+    )
+    return conn
+
+
+@app.route("/")
+def index():
+    conn = get_db_connection()
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM posts;")
+    posts = cur.fetchall()
+    cur.execute("SELECT * FROM repos;")
+    repos = cur.fetchall()
+    cur.close()
+    conn.close()
+
+    # Loop through the posts list and in each tuple replace the markdown with html
+    # TODO: Loop doesn't change list outside of loop?
+    for post in posts:
+        post = list(post)
+        post[5] = markdown.markdown(post[5])
+
+    return render_template("index.html", posts=posts, repos=repos)
+
+
+@app.route("/addrepo/", methods=("GET", "POST"))
+def create():
+    if request.method == "POST":
+        owner = request.form["owner"]
+        repourl = request.form["repourl"]
+
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute(
+            "INSERT INTO repos (owner, repourl)" "VALUES (%s, %s)",
+            (owner, repourl),
+        )
+        conn.commit()
+        cur.close()
+        conn.close()
+        return redirect(url_for("index"))
+
+    return render_template("addrepo.html")
