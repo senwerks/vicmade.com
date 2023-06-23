@@ -6,13 +6,13 @@ import markdown  # https://www.digitalocean.com/community/tutorials/how-to-use-p
 app = Flask(__name__)
 
 
-# host="postgres://dpg-ci97vkh8g3ne2egtvuk0-a.singapore-postgres.render.com",  # When app.py is run locally
 def get_db_connection():
     conn = psycopg2.connect(
-        host="postgres://dpg-ci97vkh8g3ne2egtvuk0-a",
+        host="dpg-ci97vkh8g3ne2egtvuk0-a",
+        # host="postgres://dpg-ci97vkh8g3ne2egtvuk0-a.singapore-postgres.render.com",
         database="vicmadesql",
-        user=os.environ.get("DB_USERNAME"),
-        password=os.environ.get("DB_PASSWORD"),
+        user=os.getenv("DB_USERNAME"),
+        password=os.getenv("DB_PASSWORD"),
     )
     return conn
 
