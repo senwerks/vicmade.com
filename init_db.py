@@ -27,7 +27,7 @@ cur.execute(
     "VALUES (%s, %s, %s, %s, %s)",
     (
         "Solving the Australian Signals Directorate cryptography challenge coin",
-        "VicMade.com",
+        "BallaratMade.com",
         "https://raw.githubusercontent.com/obsoletenerd/obsoletenerd.github.io/main/_posts/2022-09-01-Solving-the-Australian-Signals-Directorate-cryptography-challenge-coin.md",
         "http://obsoletenerd.com/2022/09/01/solving-the-australian-signals-directorate-cryptography-challenge-coin",
         "Today the *Australian Signals Directorate* announced their 75th Anniversary Commemorative Coin, which is a standard Australian 50 cent coin with various cryptographic puzzles embedded in it. I'm not a cryptography expert, but I've always loved this stuff from the sidelines of physical pentesting and teen-years script-kiddying, so I thought I'd give it a go. Along with a mate in our local Hackerspace's slack channel, we started bouncing ideas back and forth, and below is a write-up of the eventual path to solving all the puzzles on the coin (though as you'll see, not necessarily in the order they intended).",
@@ -59,7 +59,7 @@ cur.execute(
 )
 cur.execute(
     "INSERT INTO repos (owner, repourl)" "VALUES (%s, %s)",
-    ("VicMade.com", "https://github.com/obsoletenerd/vicmade.com"),
+    ("BallaratMade.com", "https://github.com/obsoletenerd/ballaratmade.com"),
 )
 
 conn.commit()

@@ -5,11 +5,19 @@ import markdown  # https://www.digitalocean.com/community/tutorials/how-to-use-p
 
 app = Flask(__name__)
 
+# Hacky solution to develop both locally and on Render.com
+dev_host = os.uname()[1]
+if dev_host == "Phantom.localdomain":
+    print("Running locally, using full Render.com DB path")
+    db_host = "postgres://dpg-ci97vkh8g3ne2egtvuk0-a.singapore-postgres.render.com"
+else:
+    print("Running on Render.com, using local DB path")
+    db_host = "dpg-ci97vkh8g3ne2egtvuk0-a"
+
 
 def get_db_connection():
     conn = psycopg2.connect(
-        host="dpg-ci97vkh8g3ne2egtvuk0-a",
-        # host="postgres://dpg-ci97vkh8g3ne2egtvuk0-a.singapore-postgres.render.com",
+        host=db_host,
         database="vicmadesql",
         user=os.getenv("DB_USERNAME"),
         password=os.getenv("DB_PASSWORD"),
@@ -56,3 +64,15 @@ def create():
         return redirect(url_for("index"))
 
     return render_template("addrepo.html")
+
+
+@app.route("/about")
+def about():
+    conn = get_db_connection()
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM repos;")
+    repos = cur.fetchall()
+    cur.close()
+    conn.close()
+
+    return render_template("about.html", repos=repos)

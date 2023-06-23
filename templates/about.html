@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% set active_page = "about" %}
+{% block content %}
+<h4>{% block title %} About BallaratMade {% endblock %}</h4>
+
+<div class="card mb-4">
+  <div class="card-header">Introduction</div>
+  <div class="card-body">
+    <blockquote class="blockquote mb-0">
+    <p class="card-text">BallaratMade is a multi-user blog created by the nerds behind <a href="https://www.ballarathackerspace.org.au">Ballarat Hackerspace</a>. In <em>simple</em> terms it's a git-backed markdown-based multi-user distributed-source blog engine (we'll write up a longer explanation soon).</p>
+    <p class="card-text">Posts on this site are pulled from individual members personal Git repositories, allowing them to create posts about their projects while keeping control of their own content.</p>
+    <p class="card-text">If you're a maker (of any kind) and would like to join this mad experiment in group-accountability and project-sharing, then follow the instructions <a href="#">here</a> to submit your repo of markdown posts.</p>
+  </div>
+</div>
+
+<div class="card mb-4">
+  <div class="card-header">Contributors</div>
+  <div class="card-body">
+    <blockquote class="blockquote mb-0">
+    <p class="card-text">Current contributing Git repos to this site are:</p>
+    <ul class="repolist">
+      {% for repo in repos %}
+      <li>
+        {{ repo[0] }} - <a href="{{ repo[2] }}">{{ repo[1] }}</a>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+
+{% endblock %}
