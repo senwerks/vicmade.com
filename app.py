@@ -8,8 +8,8 @@ app = Flask(__name__)
 
 def get_db_connection():
     conn = psycopg2.connect(
-        # host="postgres://dpg-ci97vkh8g3ne2egtvuk0-a", # When app.py is on render.com
-        host="postgres://dpg-ci97vkh8g3ne2egtvuk0-a.singapore-postgres.render.com",  # When app.py is run locally
+        host="postgres://dpg-ci97vkh8g3ne2egtvuk0-a",  # When app.py is on render.com
+        # host="postgres://dpg-ci97vkh8g3ne2egtvuk0-a.singapore-postgres.render.com",  # When app.py is run locally
         database="vicmadesql",
         user=os.getenv("DB_USERNAME"),
         password=os.getenv("DB_PASSWORD"),
