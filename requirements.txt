@@ -2,3 +2,4 @@ Flask
 Gunicorn
 schedule
 markdown
+psycopg2-binary
