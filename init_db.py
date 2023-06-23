@@ -2,7 +2,7 @@ import os
 import psycopg2
 
 conn = psycopg2.connect(
-    host="postgres://dpg-ci97vkh8g3ne2egtvuk0-a",
+    host="dpg-ci97vkh8g3ne2egtvuk0-a",
     # host="postgres://dpg-ci97vkh8g3ne2egtvuk0-a.singapore-postgres.render.com",
     database="vicmadesql",
     user=os.getenv("DB_USERNAME"),
