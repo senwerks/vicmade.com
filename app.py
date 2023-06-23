@@ -9,10 +9,10 @@ app = Flask(__name__)
 # host="postgres://dpg-ci97vkh8g3ne2egtvuk0-a.singapore-postgres.render.com",  # When app.py is run locally
 def get_db_connection():
     conn = psycopg2.connect(
-        host="dpg-ci97vkh8g3ne2egtvuk0-a",
+        host="postgres://dpg-ci97vkh8g3ne2egtvuk0-a",
         database="vicmadesql",
-        user=os.getenv("DB_USERNAME"),
-        password=os.getenv("DB_PASSWORD"),
+        user=os.environ.get("DB_USERNAME"),
+        password=os.environ.get("DB_PASSWORD"),
     )
     return conn
 
