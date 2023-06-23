@@ -29,12 +29,13 @@ def index():
     conn.close()
 
     # Loop through the posts list and in each tuple replace the markdown with html
-    # TODO: Loop doesn't change list outside of loop?
+    formatted_posts = []
     for post in posts:
-        post = list(post)
-        post[5] = markdown.markdown(post[5])
+        markdown_text = markdown.markdown(post[5])
+        new_tuple = tuple(post[:5]) + (markdown_text,) + post[6:]
+        formatted_posts.append(new_tuple)
 
-    return render_template("index.html", posts=posts, repos=repos)
+    return render_template("index.html", posts=formatted_posts, repos=repos)
 
 
 @app.route("/addrepo/", methods=("GET", "POST"))

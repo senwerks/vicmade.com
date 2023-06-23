@@ -8,7 +8,7 @@
       >Markdown</a
     >) <i>Added {{ post[6] }}</i>
   </p>
-  <p class="content">{{ post[5] }}</p>
+  <p class="content">{{ post[5] | safe }}</p>
 </div>
 {% endfor %}
 
