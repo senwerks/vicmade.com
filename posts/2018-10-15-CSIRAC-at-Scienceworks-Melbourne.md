@@ -22,16 +22,16 @@ CSIRAC was also the first computer to ever play music, which I thought was reall
 
 Here are some photos I took while there:
 
-![CSIRAC](/posts/images/CSIRAC-1.jpg)
+![CSIRAC](https://raw.githubusercontent.com/obsoletenerd/vicmade.com/main/posts/images/CSIRAC-1.jpg)
 
-![CSIRAC](/posts/images/CSIRAC-2.jpg)
+![CSIRAC](https://raw.githubusercontent.com/obsoletenerd/vicmade.com/main/posts/images/CSIRAC-2.jpg)
 
-![CSIRAC](/posts/images/CSIRAC-3.jpg)
+![CSIRAC](https://raw.githubusercontent.com/obsoletenerd/vicmade.com/main/posts/images/CSIRAC-3.jpg)
 
-![CSIRAC](/posts/images/CSIRAC-4.jpg)
+![CSIRAC](https://raw.githubusercontent.com/obsoletenerd/vicmade.com/main/posts/images/CSIRAC-4.jpg)
 
-![CSIRAC](/posts/images/CSIRAC-5.jpg)
+![CSIRAC](https://raw.githubusercontent.com/obsoletenerd/vicmade.com/main/posts/images/CSIRAC-5.jpg)
 
-![CSIRAC](/posts/images/CSIRAC-6.jpg)
+![CSIRAC](https://raw.githubusercontent.com/obsoletenerd/vicmade.com/main/posts/images/CSIRAC-6.jpg)
 
-![CSIRAC](/posts/images/CSIRAC-7.jpg)
+![CSIRAC](https://raw.githubusercontent.com/obsoletenerd/vicmade.com/main/posts/images/CSIRAC-7.jpg)

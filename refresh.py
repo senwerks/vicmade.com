@@ -66,6 +66,7 @@ for content_file in contents:
             elif metadata_items.split(":")[0] == "github":
                 post_github = metadata_items.split(":")[1]
                 print("Found Github: %s" % post_github)
+            # TODO: Need to make the above check if the values are empty before trying to add
 
         # Everything left after the metadata is the content of the post:
         post_content = sections[2]
