@@ -46,26 +46,6 @@ def index():
     return render_template("index.html", posts=formatted_posts, repos=repos)
 
 
-@app.route("/addrepo/", methods=("GET", "POST"))
-def create():
-    if request.method == "POST":
-        owner = request.form["owner"]
-        repourl = request.form["repourl"]
-
-        conn = get_db_connection()
-        cur = conn.cursor()
-        cur.execute(
-            "INSERT INTO repos (owner, repourl)" "VALUES (%s, %s)",
-            (owner, repourl),
-        )
-        conn.commit()
-        cur.close()
-        conn.close()
-        return redirect(url_for("index"))
-
-    return render_template("addrepo.html")
-
-
 @app.route("/about")
 def about():
     conn = get_db_connection()

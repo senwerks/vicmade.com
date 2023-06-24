@@ -3,3 +3,4 @@ Gunicorn
 schedule
 markdown
 psycopg2-binary
+PyGithub
