@@ -26,13 +26,19 @@ def get_db_connection():
     return conn
 
 
+conn = get_db_connection()
+cur = conn.cursor()
+
+
 # We'd loop through the list of approved repos here ultimately, this is just for testing.
 repo = g.get_repo("obsoletenerd/vicmade.com")
 contents = repo.get_contents("posts")
 for content_file in contents:
     if content_file.path.lower().endswith((".md")):
-        print(content_file.decoded_content)
         post_title = content_file.name.split(".")[0].replace("-", " ")[11:]
+
+        print("Adding post to database:")
+        print(post_title)
 
         cur.execute(
             "INSERT INTO posts (title, repoid, markdownurl, linkurl, content)"
