@@ -22,16 +22,16 @@ CSIRAC was also the first computer to ever play music, which I thought was reall
 
 Here are some photos I took while there:
 
-![CSIRAC](/postimages/CSIRAC-1.jpg)
+![CSIRAC](/posts/images/CSIRAC-1.jpg)
 
-![CSIRAC](/postimages/CSIRAC-2.jpg)
+![CSIRAC](/posts/images/CSIRAC-2.jpg)
 
-![CSIRAC](/postimages/CSIRAC-3.jpg)
+![CSIRAC](/posts/images/CSIRAC-3.jpg)
 
-![CSIRAC](/postimages/CSIRAC-4.jpg)
+![CSIRAC](/posts/images/CSIRAC-4.jpg)
 
-![CSIRAC](/postimages/CSIRAC-5.jpg)
+![CSIRAC](/posts/images/CSIRAC-5.jpg)
 
-![CSIRAC](/postimages/CSIRAC-6.jpg)
+![CSIRAC](/posts/images/CSIRAC-6.jpg)
 
-![CSIRAC](/images/CSIRAC-7.jpg)
+![CSIRAC](/posts/images/CSIRAC-7.jpg)
