@@ -11,7 +11,7 @@ try:
         # host="dpg-ci97vkh8g3ne2egtvuk0-a",
         host="postgres://dpg-ci97vkh8g3ne2egtvuk0-a.singapore-postgres.render.com",
         database="vicmadesql",
-        user=os.getenv("DB_USRNAME"),
+        user=os.getenv("DB_USERNAME"),
         password=os.getenv("DB_PASSWORD"),
     )
 except:
