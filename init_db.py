@@ -53,7 +53,7 @@ cur.execute(
 print("Creating sample repos")
 approved_repos = {
     "ObsoleteNerd.com": "obsoletenerd/obsoletenerd.github.io",
-    "BallaratMade.com": "obsoletenerd/ballaratmade.com",
+    "BallaratMade.com": "obsoletenerd/vicmade.com",
 }
 
 for repo in approved_repos:
