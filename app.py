@@ -32,21 +32,14 @@ def get_db_connection():
 def index():
     conn = get_db_connection()
     cur = conn.cursor()
-    cur.execute("SELECT * FROM posts;")
+    cur.execute("SELECT id, title, repoid, date_added FROM posts;")
     posts = cur.fetchall()
     cur.execute("SELECT * FROM repos;")
     repos = cur.fetchall()
     cur.close()
     conn.close()
 
-    # Loop through the posts list and in each tuple replace the markdown with html
-    formatted_posts = []
-    for post in posts:
-        markdown_text = markdown.markdown(post[5])
-        new_tuple = tuple(post[:5]) + (markdown_text,) + post[6:]
-        formatted_posts.append(new_tuple)
-
-    return render_template("index.html", posts=formatted_posts, repos=repos)
+    return render_template("index.html", posts=posts, repos=repos)
 
 
 @app.route("/post/<int:post_id>")
@@ -65,7 +58,7 @@ def post(post_id):
         new_tuple = tuple(post[:5]) + (markdown_text,) + post[6:]
         formatted_posts.append(new_tuple)
 
-    return render_template("index.html", posts=formatted_posts)
+    return render_template("post.html", posts=formatted_posts)
 
 
 @app.route("/about")

@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% set active_page = "index" %}
+{% block content %}
+<h4>{% block title %} Latest Posts {% endblock %}</h4>
+{% for post in posts %}
+<div class="card mb-4">
+  <div class="card-header">{{ post[1] }}</div>
+  <div class="card-body">
+    <blockquote class="blockquote mb-0">
+    <p class="card-text">{{ post[5] | safe }}</p>
+    <footer class="blockquote-footer">
+      Via
+      <cite title="Source Title">
+        <a href="{{ post[4] }}" class="card-link">{{ post[2] }}</a> on {{post[6] }}
+      </cite>, <a href="{{ post[3] }}" class="card-link">Markdown</a>.
+    </footer>
+  </div>
+</div>
+{% endfor %}
+
+<p>Posts are pulled and collated from the following repositories:</p>
+<ul class="repolist">
+  {% for repo in repos %}
+  <li>
+    {{ repo[0] }} - <a href="{{ repo[2] }}">{{ repo[1] }}</a>
+  </li>
+  {% endfor %}
+</ul>
+
+{% endblock %}
