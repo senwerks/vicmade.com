@@ -1,3 +1,7 @@
+############################################################################
+#  Re-pulls all posts from the approved repos and adds them to our DB      #
+############################################################################
+
 import os
 import psycopg2
 from github import Github
@@ -16,6 +20,7 @@ else:
     db_host = "dpg-ci97vkh8g3ne2egtvuk0-a"
 
 
+# Set up a connection to the database
 def get_db_connection():
     conn = psycopg2.connect(
         host=db_host,
@@ -29,60 +34,78 @@ def get_db_connection():
 conn = get_db_connection()
 cur = conn.cursor()
 
+# Get the list of approved repos from the database
+cur.execute("SELECT * FROM repos;")
+repos = cur.fetchall()
 
-# We'd loop through the list of approved repos here ultimately, this is just for testing.
-repo_name = "obsoletenerd/vicmade.com"
-repo = g.get_repo(repo_name)
+for repo in repos:
+    repo_name = repo[1]
+    print("Processing repo: %s" % repo_name)
 
-contents = repo.get_contents(
-    "posts"
-)  # TODO: Need error catching if posts dir doesn't exist
+    repo_url = repo[2]
+    print("Repo URL: %s" % repo_url)
 
-# Loop through each file in the "posts" directory
-for content_file in contents:
-    if content_file.path.lower().endswith((".md")):  # Only markdown files
-        # post_title = content_file.name.split(".")[0].replace("-", " ")[11:]
+    # Get the repo and pull the posts
+    repo = g.get_repo(repo_url)
 
-        # Get the markdown so we can parse it and add the relevant parts to the database
-        post_markdown = repo.get_contents(content_file.path).decoded_content.decode(
-            "utf-8"
-        )
-        sections = post_markdown.split("---")
-        metadata = sections[1].strip()
-        metadata_lines = metadata.split("\n")
+    # TODO: Need error catching if posts dir doesn't exist
+    contents = repo.get_contents("_posts")
 
-        for metadata_items in metadata_lines:
-            # Get the post title from the markdown metadata:
-            if metadata_items.split(":")[0] == "title":
-                post_title = metadata_items.split(":")[1]
-                print("Found Title: %s" % post_title)
+    # Loop through each file in the "_posts" directory
+    for content_file in contents:
+        if content_file.path.lower().endswith((".md")):  # Only markdown files
+            # Get the markdown so we can parse it and add the relevant parts to the database
+            post_markdown = repo.get_contents(content_file.path).decoded_content.decode(
+                "utf-8"
+            )
+            sections = post_markdown.split("---")
+            metadata = sections[1].strip()
+            metadata_lines = metadata.split("\n")
 
-            # Get the post tags from the markdown metadata:
-            elif metadata_items.split(":")[0] == "tags":
-                post_tags = metadata_items.split(":")[1]
-                print("Found Tags: %s" % post_tags)
+            # Prepopulate with the user's root URL in case we cant find posturl later
+            post_url = repo_url
 
-            # TODO: Add this to the DB structure for posts tied to a Github repository:
-            elif metadata_items.split(":")[0] == "github":
-                post_github = metadata_items.split(":")[1]
-                print("Found Github: %s" % post_github)
-            # TODO: Need to make the above check if the values are empty before trying to add
+            # Build a title from the filename, in case they didn't put one in the metadata
+            post_title = content_file.name.split(".")[0].replace("-", " ")[11:]
 
-        # Everything left after the metadata is the content of the post:
-        post_content = sections[2]
+            for metadata_items in metadata_lines:
+                # Get the post title from the markdown metadata:
+                if metadata_items.split(":")[0] == "title":
+                    post_title = metadata_items.split(":")[1]
+                    print("Found Title: %s" % post_title)
 
-        # Insert the post into the database:
-        cur.execute(
-            "INSERT INTO posts (title, repoid, markdownurl, linkurl, content)"
-            "VALUES (%s, %s, %s, %s, %s)",
-            (
-                post_title,
-                "Users-Domain.tld",  # This should be the user's domain
-                content_file.html_url,  # URL to the source Markdown file
-                "http://users-blog.tld/post-path/",  # This should be the URL to the post on the user's blog
-                post_content,
-            ),
-        )
+                # Get the post tags from the markdown metadata:
+                elif metadata_items.split(":")[0] == "tags":
+                    post_tags = metadata_items.split(":")[1]
+                    print("Found Tags: %s" % post_tags)
+
+                # Get the user's own post URL so we can link to the post on their blog
+                elif metadata_items.split(":")[0] == "posturl":
+                    post_url = metadata_items.split(":")[1]
+                    print("Found PostURL: %s" % post_url)
+
+                # TODO: Add this to the DB structure for posts tied to a Github repository:
+                elif metadata_items.split(":")[0] == "github":
+                    post_github = metadata_items.split(":")[1]
+                    print("Found Github: %s" % post_github)
+
+                # TODO: Need to check if the above values are empty before trying to add
+
+            # Everything left after the metadata is the content of the post:
+            post_content = sections[2]
+
+            # Insert the post into the database:
+            cur.execute(
+                "INSERT INTO posts (title, repoid, markdownurl, linkurl, content)"
+                "VALUES (%s, %s, %s, %s, %s)",
+                (
+                    post_title,  # The title of the post pulled from the metadata
+                    repo_name,  # The user's website name/URL
+                    content_file.html_url,  # URL to the source Markdown file
+                    post_url,  # URL to the post on the user's blog
+                    post_content,  # The markdown content of the post
+                ),
+            )
 
 conn.commit()
 
