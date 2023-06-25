@@ -50,7 +50,7 @@ def index():
 
 
 @app.route("/post/<int:post_id>")
-def index(post_id):
+def post(post_id):
     conn = get_db_connection()
     cur = conn.cursor()
     cur.execute("SELECT * FROM posts WHERE id = %s;", (post_id,))
