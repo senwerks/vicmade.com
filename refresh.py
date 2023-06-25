@@ -6,9 +6,6 @@ import os
 import psycopg2
 from github import Github
 from github import Auth
-from dotenv_vault import load_dotenv
-
-load_dotenv()  # take environment variables from .env.
 
 auth = Auth.Token(os.getenv("GITHUB_KEY"))
 g = Github(auth=auth)
@@ -16,6 +13,9 @@ g = Github(auth=auth)
 # Hacky solution to develop both locally and on Render.com
 dev_host = os.uname()[1]
 if dev_host == "Phantom.localdomain":
+    from dotenv_vault import load_dotenv
+
+    load_dotenv()  # take environment variables from .env.
     print("Running locally, using full Render.com DB path")
     db_host = "postgres://dpg-ci97vkh8g3ne2egtvuk0-a.singapore-postgres.render.com"
 else:
