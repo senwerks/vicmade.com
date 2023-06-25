@@ -2,6 +2,9 @@ import os
 import psycopg2  # https://www.psycopg.org/docs/
 from flask import Flask, render_template, request, url_for, redirect
 import markdown  # https://www.digitalocean.com/community/tutorials/how-to-use-python-markdown-to-convert-markdown-text-to-html
+from dotenv_vault import load_dotenv
+
+load_dotenv()  # take environment variables from .env.
 
 app = Flask(__name__)
 
@@ -44,6 +47,25 @@ def index():
         formatted_posts.append(new_tuple)
 
     return render_template("index.html", posts=formatted_posts, repos=repos)
+
+
+@app.route("/post/<int:post_id>")
+def index():
+    conn = get_db_connection()
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM posts WHERE id = %s;", (post_id,))
+    posts = cur.fetchall()
+    cur.close()
+    conn.close()
+
+    # Loop through the posts list and in each tuple replace the markdown with html
+    formatted_posts = []
+    for post in posts:
+        markdown_text = markdown.markdown(post[5])
+        new_tuple = tuple(post[:5]) + (markdown_text,) + post[6:]
+        formatted_posts.append(new_tuple)
+
+    return render_template("index.html", posts=formatted_posts)
 
 
 @app.route("/about")

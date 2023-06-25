@@ -6,6 +6,9 @@ import os
 import psycopg2
 from github import Github
 from github import Auth
+from dotenv_vault import load_dotenv
+
+load_dotenv()  # take environment variables from .env.
 
 auth = Auth.Token(os.getenv("GITHUB_KEY"))
 g = Github(auth=auth)

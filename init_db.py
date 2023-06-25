@@ -4,6 +4,9 @@
 
 import os
 import psycopg2
+from dotenv_vault import load_dotenv
+
+load_dotenv()  # take environment variables from .env.
 
 try:
     # Connect to the PostgreSQL database
